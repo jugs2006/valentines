@@ -10,61 +10,74 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             background-color: #ffeef2;
             font-family: 'Arial', sans-serif;
             text-align: center;
-            overflow: hidden;
+            overflow-x: hidden; /* Prevents side-scrolling on mobile */
+            padding: 15px;
+            box-sizing: border-box;
         }
 
         h1 {
             color: #d63384;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 20px;
+            line-height: 1.2;
         }
 
         .buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            align-items: center;
+            gap: 15px;
             margin-top: 20px;
+            width: 100%;
+            height: 100px;
+            position: relative;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            padding: 15px 25px;
+            font-size: 1.1rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
+            z-index: 2;
         }
 
         #noBtn {
             background-color: #adb5bd;
             color: white;
             position: absolute;
+            white-space: nowrap;
+            z-index: 1;
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         #celebration, #final-msg {
-            font-size: 1.5rem;
-            color: #ff4d6d;
-            padding: 20px;
+            width: 100%;
+            max-width: 400px;
         }
 
         img {
-            width: 250px;
+            width: 100%;
+            max-width: 250px;
+            height: auto;
             border-radius: 20px;
             margin-bottom: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         }
 
         .confirm-btn {
@@ -72,13 +85,33 @@
             color: white;
             margin-top: 20px;
         }
+
+        /* --- MOBILE ADJUSTMENTS --- */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem; /* Smaller text for phones */
+            }
+            
+            button {
+                padding: 12px 20px;
+                font-size: 0.95rem; /* Smaller buttons for phones */
+            }
+
+            img {
+                max-width: 180px; /* Smaller images to fit screen */
+            }
+
+            p {
+                font-size: 1.1rem !important;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="main-content">
         <img src="babloo.jpeg" alt="Cute Cat"> 
-        <h1>Will you be my Valentine? pleaaaasseeeeeeeee ❤️</h1>
+        <h1>Will you be my Valentine? pleaaaasseeeeeeeeeeee ❤️</h1>
         <div class="buttons">
             <button id="yesBtn">Yessssssssssss!</button>
             <button id="noBtn">No(you know i wont let u say no)🤣🤣🤣</button>
@@ -94,7 +127,7 @@
     <div id="final-msg" class="hidden">
         <img src="catpointing.jpg" alt="Cat">
         <h1>Make sure you're free😠</h1>
-        <p style="font-size: 1.8rem; font-weight: bold;">You are officially booked for February 14th.😉😉😏😏</p>
+        <p style="font-size: 1.6rem; font-weight: bold; color: #d63384;">You are officially booked for February 14th.😉😉😏😏</p>
         <p>No excuses, no other plans. Just us. See you then! ❤️</p>
     </div>
 
@@ -106,32 +139,36 @@
         const celebration = document.getElementById('celebration');
         const finalMsg = document.getElementById('final-msg');
 
-        // Function to move the "No" button
+        // Improved "No" button movement for small screens
         const moveButton = () => {
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            // Screen dimensions minus button size and small margin
+            const maxX = window.innerWidth - noBtn.offsetWidth - 30;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 30;
+            
+            const x = Math.max(10, Math.random() * maxX);
+            const y = Math.max(10, Math.random() * maxY);
+            
+            noBtn.style.position = 'fixed'; // Allows button to fly anywhere on screen
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
         };
 
         noBtn.addEventListener('mouseover', moveButton);
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Stop mobile from clicking button on first touch
             moveButton();
         });
 
-        // "Yes" reveals celebration
         yesBtn.addEventListener('click', () => {
             mainContent.classList.add('hidden');
             celebration.classList.remove('hidden');
         });
 
-        // "Next" reveals the 14th Feb requirement
         nextBtn.addEventListener('click', () => {
             celebration.classList.add('hidden');
             finalMsg.classList.remove('hidden');
         });
     </script>
 </body>
-
 </html>
+

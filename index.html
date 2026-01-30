@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question ❤️</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffeef2;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: absolute;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #celebration, #final-msg {
+            font-size: 1.5rem;
+            color: #ff4d6d;
+            padding: 20px;
+        }
+
+        img {
+            width: 250px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .confirm-btn {
+            background-color: #d63384;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-content">
+        <img src="babloo.jpeg" alt="Cute Cat"> 
+        <h1>Will you be my Valentine? pleaaaasseeeeeeeeeeeeeeeeeeee ❤️</h1>
+        <div class="buttons">
+            <button id="yesBtn">Yessssssssssss!</button>
+            <button id="noBtn">No(you know i wont let u say no)🤣🤣🤣</button>
+        </div>
+    </div>
+
+    <div id="celebration" class="hidden">
+        <img src="catdance.jpeg" alt="Happy Dance">
+        <h1>Yay! i love u so much my princess! 🥰</h1>
+        <button class="confirm-btn" id="nextBtn">Wait, one more thing... Click me!</button>
+    </div>
+
+    <div id="final-msg" class="hidden">
+        <img src="catpointing.jpg" alt="Cat">
+        <h1>Make sure you're free😠</h1>
+        <p style="font-size: 1.8rem; font-weight: bold;">You are officially booked for February 14th.😉😉😏😏</p>
+        <p>No excuses, no other plans. Just us. See you then! ❤️</p>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const mainContent = document.getElementById('main-content');
+        const celebration = document.getElementById('celebration');
+        const finalMsg = document.getElementById('final-msg');
+
+        // Function to move the "No" button
+        const moveButton = () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        };
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        // "Yes" reveals celebration
+        yesBtn.addEventListener('click', () => {
+            mainContent.classList.add('hidden');
+            celebration.classList.remove('hidden');
+        });
+
+        // "Next" reveals the 14th Feb requirement
+        nextBtn.addEventListener('click', () => {
+            celebration.classList.add('hidden');
+            finalMsg.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
